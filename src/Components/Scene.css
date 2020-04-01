@@ -1,0 +1,98 @@
+
+.header {
+  height: 40px;
+  /* display: flex; */
+}
+.scene {
+  height: calc(100vh - 60px);
+  width: calc(100vw - 20px);
+  background-color: black;
+  position: relative;
+  border: 10px rgb(30, 42, 164) solid;
+  overflow: hidden;
+}
+
+/* 
+
+$color1: black;
+$color2: rgb(255, 233, 80);
+$color3: rgb(30, 42, 164);
+$color4: #bb0a30; 
+$section-min-height: 100vh;
+$basic-font: 'Roboto Mono', sans-serif;
+*/
+.food {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+}
+  .food.hidden {
+      display: none;
+  }
+  .effective-food {
+      border-radius: 50px;
+      width: 10px;
+      height: 10px;
+      background-color: rgb(255, 233, 80);
+      margin: 25px;
+  }
+  .pacman {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+  }
+    .pacman .svg {
+        fill: rgb(255, 233, 80);
+    }
+
+    .pacman.death .svg {
+      fill: white;
+    }
+
+    .pacman.left {
+        transform: rotateY(180deg);
+    }
+
+    .pacman.up {
+        transform: rotate(-90deg);
+    }
+
+    .pacman.down {
+        transform: rotate(90deg);
+    }
+.ghost {
+  width: 60px;
+  height: 63px;
+  position: absolute;
+}
+  .ghost.red svg {
+    fill: red;
+  }
+
+  .ghost.white svg {
+    fill: white;
+  }
+
+  .ghost.green svg {
+    fill: green;
+  }
+
+  .ghost.blue svg {
+    fill: blue;
+  }
+
+  .ghost.orange svg {
+    fill: orange;
+  }
+
+  .ghost.orange.left {
+      transform: rotateY(180deg);
+  }
+
+  .ghost.orange.up {
+      transform: rotate(-90deg);
+  }
+
+  .ghost.orange.down {
+      transform: rotate(90deg);
+  }

@@ -1,5 +1,20 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Phases
+### Create project
+
+### Design components
+
+### Display component onto the scene
+
+### Control user key inputs
+
+### Control ghost random moving
+
+### Control game objects conflicts and scores
+
+### Debugging
+
 ## Available Scripts
 
 In the project directory, you can run:
