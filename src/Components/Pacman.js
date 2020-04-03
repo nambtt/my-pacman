@@ -6,71 +6,61 @@ class Pacman extends React.Component {
         super(props);
         this.state = {
             position: this.props.position,
-            looking: 'right',
             death: false
         }
     }
     componentDidMount() {
-        document.addEventListener('keydown', this.onKeyDown.bind(this));
         this.moveInterval = setInterval(this.move.bind(this), 100);
     }
 
-    onKeyDown(e) {
-        if (!this.state.death)
-            this.rotate(e.keyCode);
-    }
-
-    rotate(keyCode) {
-        var newDirection = this.state.looking;
-        if (keyCode === 37) {
-            newDirection = 'left';
-        } else if (keyCode === 38) {
-            newDirection = 'up';
-        } else if (keyCode === 39) {
-            newDirection = 'right';
-        } else if (keyCode === 40) {
-            newDirection = 'down';
-        }
-        this.setState({looking: newDirection});
+    componentWillUnmount() {   
+        clearInterval(this.moveInterval);
     }
 
     move() {
 		var currentLeft = this.state.position.left;
 		var currentTop = this.state.position.top;
-        if (this.state.looking === 'right') {
+        if (this.props.direction === 'right') {
             var distanceToRightBorder = window.innerWidth - 2*this.props.border - currentLeft - this.props.pacmanSize;
             var step = Math.min(this.props.velocity, distanceToRightBorder);
-            this.setState({position: {left: currentLeft + step, top: currentTop}});
+            this.setStateWhilePlaying({position: {left: currentLeft + step, top: currentTop}});
         }
-        if (this.state.looking === 'left') {
+        if (this.props.direction === 'left') {
             var distanceToLeftBorder = currentLeft;
             step = Math.min(this.props.velocity, distanceToLeftBorder);
-            this.setState({position: {left: currentLeft - step, top: currentTop}});
+            this.setStateWhilePlaying({position: {left: currentLeft - step, top: currentTop}});
         }
-        if (this.state.looking === 'down') {
+        if (this.props.direction === 'down') {
             var distanceToBottomBorder = window.innerHeight - this.props.topBarHeight - 2*this.props.border - currentTop - this.props.pacmanSize;
             step = Math.min(this.props.velocity, distanceToBottomBorder);
-            this.setState({position: {top: currentTop + step, left: currentLeft}});
+            this.setStateWhilePlaying({position: {top: currentTop + step, left: currentLeft}});
         }
-        if (this.state.looking === 'up') {
+        if (this.props.direction === 'up') {
             var distanceToTopBorder = currentTop;
             step = Math.min(this.props.velocity, distanceToTopBorder);
-            this.setState({position: {top: currentTop - step, left: currentLeft}});
+            this.setStateWhilePlaying({position: {top: currentTop - step, left: currentLeft}});
         }
         
         if (!step) {
-            this.rotate([37, 38, 39, 40][Math.floor(Math.random() * 4)]);
+            this.props.randomDirection();
         }
     }
 
     killed() {
-        this.setState({death: true});
+        this.setStateWhilePlaying({death: true});
         clearInterval(this.moveInterval);
+    }
+
+    setStateWhilePlaying(val) {
+        if (this.props.playing) {
+            this.setState(val);
+        }
     }
 
     render() {
         return (
-            <div className={'pacman ' + (this.state.looking) + (this.state.death ? " death " : "")} style={this.state.position}>
+            <div className={'pacman ' + (this.props.direction) + (this.state.death ? " death " : "")} 
+                style={this.state.position}>
                 <PacmanSVG />
             </div>
         )
@@ -81,8 +71,8 @@ Pacman.defaultProps = {
     border: 10,
     topBarHeight: 40,
     pacmanSize: 60,
-    velocity: 20
-
+    velocity: 20,
+    direction: 'right'
 };
 
 export default Pacman;

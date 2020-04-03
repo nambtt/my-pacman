@@ -1,6 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Game play and rules
+You, as the Pacman will try to eat all the food and to not collide with four ghosts. If the Pacman hits any of the ghosts, you'll lose. Each food you eat, giving you a point. When the Pacman eats the whole food on the ground, you'll win. Let's play!
+### Control the Pacman
+- Just simple as using keyboard arrows **Up, Down, Left, Right** to change Pacman's direction
+
+
 ## Phases
+
 ### Create project
 
 ### Design components
@@ -13,7 +20,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Control game objects conflicts and scores
 
+### Pause and Unpause
+
+### Handle user input on Phones
+
+### Handle win lose
+
 ### Debugging
+
+## Technical issues
+
+### Conflicting Direction state in Scene components
+
+- Because Scene doesn't manage the Direction but Pacman and Controller. If it has its own state, make sure when Pacman's direction and Controller's direction are changed, Scene's direction would be changed accordingly.
+- The other reason for this issue is that we're using `componentWillReceiveProps` in Scene. If Scene's points state is changed, its direction will keep updating the same Direction that App is holding.
 
 ## Available Scripts
 
