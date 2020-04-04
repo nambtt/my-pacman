@@ -1,8 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Game play and rules
-You, as the Pacman will try to eat all the food and to not collide with four ghosts. If the Pacman hits any of the ghosts, you'll lose. Each food you eat, giving you a point. When the Pacman eats the whole food on the ground, you'll win. Let's play!
+
+You, as the Pacman will try to eat all the food and to not collide with four ghosts. If the Pacman hits any of the ghosts, you'll lose. Each food you eat, giving you a point. When the Pacman eats the whole food on the ground, you'll win.
+
 ### Control the Pacman
+
 - Just simple as using keyboard arrows **Up, Down, Left, Right** to change Pacman's direction
 
 
@@ -100,8 +103,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 ### Deploying to Github pages
 
-Help link: https://dev.to/yuribenjamin/how-to-deploy-react-app-in-github-pages-2a1f
+Help link: <https://dev.to/yuribenjamin/how-to-deploy-react-app-in-github-pages-2a1f>
 
 ### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This section has moved here: <https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify>
