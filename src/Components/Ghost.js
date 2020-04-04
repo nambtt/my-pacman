@@ -16,7 +16,7 @@ class Ghost extends React.Component {
     }
 
     componentDidMount() {
-        this.moveInterval = setInterval(this.move.bind(this), isMobile ? 300 : 200);
+        this.moveInterval = setInterval(this.move.bind(this), isMobile ? 250 : 150);
         this.changeDirectionInterval = setInterval(this.changeDirection.bind(this), 2000);
     }
 

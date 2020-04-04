@@ -4,7 +4,6 @@ import React from 'react';
 import Pacman from './Pacman';
 import Ghost from './Ghost';
 import Food from './Food';
-import {isMobile} from 'react-device-detect';
 
 class Scene extends React.Component {
     constructor(props) {
@@ -12,13 +11,14 @@ class Scene extends React.Component {
         this.pacmanRef = React.createRef();
         this.ghostRefs = [];
         this.foodRefs = [];
-        this.noOfGhosts = isMobile ? 2 : 1;
+        var maxLine = Math.max(window.innerHeight, window.innerWidth);
+        this.noOfGhosts = Math.floor(maxLine/200);
         for (var i=0; i<this.noOfGhosts; i++) {
             this.ghostRefs.push(React.createRef());
         }
         this.noOfFoodColumns = 0;
         this.noOfFoodRows = 0;
-        this.ghostColors = ['red', 'green', 'blue', 'orange'];
+        this.ghostColors = ['red', 'invi', 'green', 'invi', 'blue', 'invi', 'orange'];
         this.directions = ['left', 'up', 'right', 'down'];
     }
 
@@ -107,13 +107,14 @@ class Scene extends React.Component {
                 if (this.foodRefs[i].length < this.noOfFoodColumns)
                     this.foodRefs[i].push(React.createRef());
                 var position = {top: this.props.foodSize*i, left: this.props.foodSize*j};
-                foods.push(<Food ref={this.foodRefs[i][j]} position={position}/>)
+                foods.push(<Food ref={this.foodRefs[i][j]} position={position} key={`${i}_${j}`}/>)
             }
         }
         let ghosts = [];
         for (var i=0; i<this.noOfGhosts; i++) {
             ghosts.push(<Ghost 
                 ref={this.ghostRefs[i]} 
+                key={i}
                 playing={this.props.playing} 
                 position={{top: (i + 1) * window.innerHeight/(this.noOfGhosts + 1), left: (i + 1) * window.innerWidth/(this.noOfGhosts + 1)}} 
                 color={this.ghostColors[i]}
@@ -122,7 +123,9 @@ class Scene extends React.Component {
         return (
             <div className="scene">
                 {foods}
-				<Pacman ref={this.pacmanRef} playing={this.props.playing} position={{top: 0, left: 0}}
+                <Pacman ref={this.pacmanRef} 
+                    playing={this.props.playing} 
+                    position={{top: 0, left: 0}}
                     direction={this.props.direction}
                     randomDirection={this.props.randomDirection}></Pacman>
                 {ghosts}
@@ -135,8 +138,7 @@ Scene.defaultProps = {
     border: 10,
     topBarHeight: 40,
     foodSize: 60,
-    foodCollidingSize: 10,
-    foodBorderBottomDistance: 10
+    foodCollidingSize: 10
 }
 
 export default Scene;
