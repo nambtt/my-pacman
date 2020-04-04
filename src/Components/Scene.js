@@ -12,7 +12,7 @@ class Scene extends React.Component {
         this.ghostRefs = [];
         this.foodRefs = [];
         var maxLine = Math.max(window.innerHeight, window.innerWidth);
-        this.noOfGhosts = Math.floor(maxLine/200);
+        this.noOfGhosts = Math.floor(maxLine/250);
         for (var i=0; i<this.noOfGhosts; i++) {
             this.ghostRefs.push(React.createRef());
         }

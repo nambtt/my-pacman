@@ -25,8 +25,8 @@
 }
 .controller {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 40px;
+  right: 40px;
   background: white;
   border-radius: 1000px;
   width: 100px;
@@ -63,16 +63,6 @@
   border: 10px rgb(30, 42, 164) solid;
   overflow: hidden;
 }
-
-/* 
-
-$color1: black;
-$color2: rgb(255, 233, 80);
-$color3: rgb(30, 42, 164);
-$color4: #bb0a30; 
-$section-min-height: 100vh;
-$basic-font: 'Roboto Mono', sans-serif;
-*/
 .food {
   width: 60px;
   height: 60px;
