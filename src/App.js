@@ -27,7 +27,12 @@ class App extends React.Component {
   }
 
   gameOver() {
-    this.setState({finished: true, lost: true});
+    if ( ! this.state.finished)
+      this.setState({finished: true, lost: true});
+  }
+
+  win() {
+    this.setState({finished: true, lost: false});
   }
 
   pause(playing) {
@@ -56,10 +61,12 @@ class App extends React.Component {
           pause={this.pause.bind(this)}>
         </Header>
         <Scene ref={this.sceneRef} 
-          gameOver={this.gameOver.bind(this)} 
-          increase={this.increaseValue.bind(this)} 
           playing={this.state.playing}
           direction={this.state.direction}
+          points={this.state.points}
+          gameOver={this.gameOver.bind(this)} 
+          win={this.win.bind(this)} 
+          increase={this.increaseValue.bind(this)} 
           randomDirection={this.randomDirection.bind(this)}></Scene>
         <Controller ref={this.controllerRef} 
           changeDirection={this.changeDirection.bind(this)}/>

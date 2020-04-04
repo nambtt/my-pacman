@@ -12,12 +12,14 @@ class Scene extends React.Component {
         this.pacmanRef = React.createRef();
         this.ghostRefs = [];
         this.foodRefs = [];
-        this.noOfGhosts = isMobile ? 2 : 4;
-        this.ghostColors = ['red', 'green', 'blue', 'orange'];
-        this.directions = ['left', 'up', 'right', 'down'];
+        this.noOfGhosts = isMobile ? 2 : 1;
         for (var i=0; i<this.noOfGhosts; i++) {
             this.ghostRefs.push(React.createRef());
         }
+        this.noOfFoodColumns = 0;
+        this.noOfFoodRows = 0;
+        this.ghostColors = ['red', 'green', 'blue', 'orange'];
+        this.directions = ['left', 'up', 'right', 'down'];
     }
 
     componentDidMount() {
@@ -75,6 +77,9 @@ class Scene extends React.Component {
                         this.props.foodCollidingSize)) {
                     food.ate();
                     this.props.increase();
+                    if (this.props.points == this.noOfFoodColumns * this.noOfFoodRows) {
+                        this.props.win();
+                    }
                 }
             }
         }
@@ -93,13 +98,13 @@ class Scene extends React.Component {
     render() {
         var foods = [];
         
-        var noOfFoodColumns = Math.round((window.innerWidth - 2*this.props.border)/this.props.foodSize);
-        var noOfFoodRows = Math.round((window.innerHeight - this.props.topBarHeight - 2*this.props.border)/this.props.foodSize);
-        for (var i = 0; i < noOfFoodRows; i++) {
-            if (this.foodRefs.length < noOfFoodRows)
+        this.noOfFoodColumns = Math.round((window.innerWidth - 2*this.props.border)/this.props.foodSize);
+        this.noOfFoodRows = Math.round((window.innerHeight - this.props.topBarHeight - 2*this.props.border)/this.props.foodSize);
+        for (var i = 0; i < this.noOfFoodRows; i++) {
+            if (this.foodRefs.length < this.noOfFoodRows)
                 this.foodRefs.push([]);
-            for (var j = 0; j < noOfFoodColumns; j++) {
-                if (this.foodRefs[i].length < noOfFoodColumns)
+            for (var j = 0; j < this.noOfFoodColumns; j++) {
+                if (this.foodRefs[i].length < this.noOfFoodColumns)
                     this.foodRefs[i].push(React.createRef());
                 var position = {top: this.props.foodSize*i, left: this.props.foodSize*j};
                 foods.push(<Food ref={this.foodRefs[i][j]} position={position}/>)
