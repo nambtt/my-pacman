@@ -1,11 +1,13 @@
 import React from 'react';
-import Firebase from 'firebase';
+import Firebase from "firebase";
 import firebaseConfig from './firebase.config';
+
 import RegisterPlayer from './Components/RegisterPlayer';
 import Header from './Components/Header';
 import Scene from './Components/Scene';
 import Controller from './Components/Controller';
 import WinLose from './Components/WinLose';
+import Scoreboard from './Components/Scoreboard';
 import './App.css';
 
 class App extends React.Component {
@@ -20,26 +22,41 @@ class App extends React.Component {
     this.headerRef = React.createRef();
     this.sceneRef = React.createRef();
     this.controllerRef = React.createRef();
-    this.state = {
+    this.baseState = {
       gameKey: Math.random()*1000000,
-      playerName: '',
-      showingRegister: true,
+      showingRegister: false,
       showingHelp: false,
+      showingScore: false,
       direction: 'right', 
       finished: false, 
       lost: false, 
       points: 0
     };
-    this.baseState = this.state;
+    this.fullBaseState = Object.assign({}, this.baseState, {playerKey: '', playerName: ''});
+    this.state = this.fullBaseState;
   }
+
+  componentDidMount() {
+    this.playAgain(this.state.gameKey);
+  }
+
   increaseValue() {
     var newPoints = this.state.points + 1;
     this.setState({points: newPoints});
   }
 
-  gameOver() {
-    if ( ! this.state.finished)
+  gameOver = () => {
+    if ( ! this.state.finished) {
+
       this.setState({finished: true, lost: true});
+
+      Firebase.database().ref('players/' + this.state.playerKey).set({
+        name: this.state.playerName,
+        score: this.state.points,
+        won: false,
+        date: new Date().toLocaleString()
+      });
+    }
   }
 
   win() {
@@ -55,9 +72,19 @@ class App extends React.Component {
   }
 
   playAgain(playerName) {
-    this.setState(this.baseState);
-    this.setState({showingRegister: false});
-    this.setState({gameKey: Math.random()*1000000});
+    if (!this.state.playerKey) {
+      const playerKey = Firebase.database().ref('/players').push({name: playerName}).key;
+      this.setState(this.baseState);
+      this.setState({gameKey: Math.random()*1000000});
+      this.setState({playerKey: playerKey});
+      this.setState({playerName: playerName});
+      this.setState({showingRegister: false});
+    } else {
+      this.setState(this.baseState);
+      this.setState({gameKey: Math.random()*1000000});
+      this.setState({showingRegister: false});
+    }
+    
   }
 
   randomDirection() {
@@ -85,8 +112,13 @@ class App extends React.Component {
           changeDirection={this.changeDirection.bind(this)}/>
         <WinLose 
           lost={this.state.lost} 
-          finished={this.state.finished} 
-          playAgain={this.playAgain.bind(this)}/>
+          finished={true} 
+          playAgain={this.playAgain.bind(this)}>
+            <Scoreboard 
+            playerKey={this.state.playerKey} 
+            playerName={this.state.playerName} />
+
+          </WinLose>
       </div>
     );
   }

@@ -56,8 +56,8 @@
   left: 30px;
 }
 .scene {
-  height: calc(100vh - 60px);
-  width: calc(100vw - 20px);
+  height: calc(100vh);
+  width: calc(100vw);
   background-color: black;
   position: relative;
   border: 10px rgb(30, 42, 164) solid;
@@ -152,23 +152,48 @@
   display: none;
 }
 .modal-content {
+  border-radius: 3px;
   position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-  width: 300px;
-  height: 150px;
+  width: 350px;
+  height: auto;
   z-index: 10;
   opacity: 1;
   background-color: white;
+  max-width: 80vw;
+  padding: 2em;
 }
 .modal-content button {
   font-size: 12pt;
   margin: 0 10px;
 }
+.modal-actions {
+  padding: 1em;
+  text-align: right;
+}
+
+.modal-actions * {
+  margin-left: 1em !important;
+}
 
 .modal-content .won {
   color: orange;
   font-weight: bold;
+}
+
+#registerModal {
+  width: 400px;
+}
+
+#registerModal input[type=text] {
+  width: 250px;
+  max-width: 40vw;
+}
+
+#winLoseModal {
+  width: 500px;
+  /* height: 500px; */
 }

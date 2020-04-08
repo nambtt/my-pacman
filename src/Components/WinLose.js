@@ -16,11 +16,13 @@ class WinLose extends React.Component {
     render() {
         return (
             <>
-                <div className={"modal-content " + (this.props.finished ? " " : "hide")}>
+                <div id="winLoseModal" className={"modal-content " + (this.props.finished ? " " : "hide")}>
                     {this.getGameResult()}
-                    <br />
-                    <button className="play-again-btn" onClick={this.props.playAgain}>Play again</button>
-                    <button className="quit-btn">Quit</button>
+                    {this.props.children}
+                    <div className="modal-actions">
+                        <button className="ui button primary play-again-btn" onClick={this.props.playAgain}>Play again</button>
+                        <button className="ui button quit-btn">Quit</button>
+                    </div>
                 </div> 
                 <div className={"modal-overlay" + (this.props.finished ? " " : "hide")}></div>
             </>
