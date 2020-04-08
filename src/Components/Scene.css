@@ -138,7 +138,7 @@
   .ghost.orange.down {
       transform: rotate(90deg);
   }
-.win-lose-overlay {
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -151,7 +151,7 @@
 .hide {
   display: none;
 }
-.content {
+.modal-content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -163,16 +163,12 @@
   opacity: 1;
   background-color: white;
 }
-.content button {
+.modal-content button {
   font-size: 12pt;
   margin: 0 10px;
 }
 
-.content .lost {
-
-}
-
-.content .won {
+.modal-content .won {
   color: orange;
   font-weight: bold;
 }

@@ -8,8 +8,7 @@ You, as the Pacman will try to eat all the food and to not collide with four gho
 
 - Just simple as using keyboard arrows **Up, Down, Left, Right** to change Pacman's direction
 
-
-## Phases
+## Development Phases
 
 ### Create project
 
@@ -21,7 +20,7 @@ You, as the Pacman will try to eat all the food and to not collide with four gho
 
 ### Control ghost random moving
 
-### Control game objects conflicts and scores
+### Control game objects collisions and scores
 
 ### Pause and Unpause
 
@@ -29,7 +28,19 @@ You, as the Pacman will try to eat all the food and to not collide with four gho
 
 ### Handle win lose
 
-### Debugging
+### Register player name
+
+### Scores board
+
+>#### Using Firebase
+>
+>- **Database** to store scores board data
+>
+>- **Function** to calculate the top scores and send refreshing command to Messaging.
+>
+>- **Messaging** to send request to client app for updating the current user Scores Board.
+
+[![An old rock in the desert](/public/notify.png "Firebase components")](https://firebase.google.com/docs/functions/images/notify.png?authuser=0)
 
 ## Technical issues
 
@@ -37,6 +48,11 @@ You, as the Pacman will try to eat all the food and to not collide with four gho
 
 - Because Scene doesn't manage the Direction but Pacman and Controller. If it has its own state, make sure when Pacman's direction and Controller's direction are changed, Scene's direction would be changed accordingly.
 - The other reason for this issue is that we're using `componentWillReceiveProps` in Scene. If Scene's points state is changed, its direction will keep updating the same Direction that App is holding.
+=> The solution is we store the pacman's direction state in App component. Then we send the state to the child components' props.
+
+## TODO
+
+- Improve styling with SCSS instead of normal CSS.
 
 ## Available Scripts
 

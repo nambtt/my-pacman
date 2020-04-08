@@ -14,8 +14,8 @@ class Header extends React.Component {
         super(props);
     }
 
-    pause(playing) {
-        this.props.pause(playing);
+    showHideHelp(playing) {
+        this.props.showHideHelp(playing);
     }
 
     render() {
@@ -23,7 +23,7 @@ class Header extends React.Component {
             <div className="header">
                 <div id="howTo" style={{display: this.props.playing ? 'none' : 'block'}}>
                     <ReactMarkdown source={input} />
-                    <button className="lets-play" onClick={ () => this.pause(true)}>Resume</button>
+                    <button className="lets-play" onClick={ () => this.showHideHelp(true)}>Resume</button>
                 </div>
                 <div className="head">
                     <div className="left title">Pacman</div>

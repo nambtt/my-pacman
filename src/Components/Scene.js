@@ -34,6 +34,8 @@ class Scene extends React.Component {
     }
 
     lookForCrash() {
+        if ( ! this.props.playing)
+        return;
         var pacman = this.pacmanRef.current;
         for (var i in this.ghostRefs) {
             var ghost = this.ghostRefs[i].current;
@@ -60,6 +62,8 @@ class Scene extends React.Component {
     }
 
     lookForFood() {
+        if ( ! this.props.playing)
+        return;
         var pacman = this.pacmanRef.current;
         if (!pacman)
             return;
