@@ -6,28 +6,19 @@ class Scoreboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            players: []
+            players: [],
+            tops: []
         };
     }
 
     onPlayerChanged = () => {
 
-        function compare( a, b ) {
-            if ( a.score < b.score ){
-              return 1;
-            }
-            if ( a.score > b.score ){
-              return -1;
-            }
-            return 0;
-          }
-
         var playersRef = Firebase.database().ref('players');
         playersRef.on('child_added', data => {
             var players = this.state.players;
             players.push(Object.assign({}, data.val(), {key: data.key}));
-            players.sort(compare);
-            this.setState({players: players});
+            var tops = this.getScoreboardData(players);
+            this.setState({players: [...players], tops: tops});
         });
 
         playersRef.on('child_changed', data => {
@@ -39,67 +30,91 @@ class Scoreboard extends React.Component {
                     p.won = data.val().won;
                 }
             });
-            players.sort(compare);
-            this.setState({players: [...players]});
+            var tops = this.getScoreboardData(players);
+            this.setState({players: [...players], tops: tops});
         });
     }
 
+    compare( a, b ) {
+        if ( !a.score || a.score < b.score ){
+          return 1;
+        }
+        if ( !b.score || a.score > b.score ){
+          return -1;
+        }
+        return 0;
+    }
+
+    getScoreboardData = players => {
+        // sort by score
+        players.sort(this.compare);
+        // set ranks
+        var tops = players.slice(0, 3).map((item, i) => { return Object.assign({}, item, {rank: i + 1})});
+        var isCurrentPlayerInTops = tops.filter(top => { return top.key === this.props.playerKey}).length;
+        if (!isCurrentPlayerInTops) {
+
+            // add current player
+            let curRank = -1;
+            var curPlayer = players
+                .filter((p, index) => { 
+                    if (p.key === this.props.playerKey) {
+                        curRank = index + 1;
+                        return true;
+                    }
+                })[0];
+
+            // add sencond top players
+            if (curRank > 4) {
+                tops.push({key:'dummy1', name: '...', rank: ''});
+            }
+
+            tops.push(Object.assign({}, curPlayer, {rank: curRank}));
+
+            // lowest rank players
+            if (players.length > curRank) {
+                if (players.length > curRank + 1){
+                    tops.push({key:'dummy2', name: '...', rank: ''});
+                }
+                tops.push(Object.assign({}, players[players.length - 1], {rank: players.length}));
+            }
+        } else {
+            if (players.length == 4) {
+                tops.push(Object.assign({}, players[players.length - 1], {rank: players.length}));
+            } else if (players.length > 4) {
+                tops.push({key:'dummy1', name: '...', rank: ''});
+                tops.push(Object.assign({}, players[players.length - 1], {rank: players.length}));
+            }
+        }
+        
+        return tops;
+    }
+
     componentDidMount = () => {
-
         this.onPlayerChanged();
-
-        if (this.state.players.length)
-            return;
-        // Firebase.database().ref('players')
-        //     .orderByChild('score')
-        //     //.limitToLast(5)
-        //     .once('value', (snapshot) => {
-        //         var players = [];
-        //         //var inTopPlayers = false;
-        //         snapshot.forEach(player => {
-        //             // if (this.props.playerKey === player.key){
-        //             //     inTopPlayers = true;
-        //             // }
-        //             players.push(Object.assign({}, player.val(), {key: player.key}));
-        //         });
-        //         this.setState({players: players});
-        //         // if (!inTopPlayers) {
-        //         //     players.push({key:'dummy1', name: '...'});
-        //         //     Firebase.database().ref('players/' + this.props.playerKey)
-        //         //         .once('value', curPlayerSnapshot => {
-        //         //             players.push(Object.assign({}, curPlayerSnapshot.val(), {key: curPlayerSnapshot.key}));
-        //         //             players.push({key:'dummy2', name: '...'});
-        //         //             this.setState({players: players});
-        //         //         });
-        //         // } else {
-        //         //     this.setState({players: players});
-        //         // }
-                
-        //     });
     }
     
     render() {
         return (
             <div className="score-board">
-                <table className="ui single line table">
+                <table className="ui table striped">
                     <thead>
                         <tr>
-                        <th></th>
+                        <th>Rank</th>
                         <th>Player</th>
-                        <th>Score</th>
+                        <th className="center aligned">Score</th>
                         <th>Date</th>
-                        <th>Winner</th>
+                        {/* <th>Winner</th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.players.map((player, i) => {
+                        {this.state.tops.map((player, i) => {
                             return (
                                 <tr key={player.key} className={this.props.playerKey === player.key ? 'positive' : ''}>
-                                <td>{i}</td>
-                                <td>{player.name}</td>
-                                <td>{player.score}</td>
-                                <td>{player.date}</td>
-                                <td>{player.won}</td>
+                                    <td className="collapsing">{player.rank}</td>
+                                    <td>{player.name}</td>
+                                    <td className="center aligned">{player.score}</td>
+                                    <td>{player.date}</td>
+                                    {/* <td>{player.won}</td> */}
                                 </tr>
                             );
                         })}
