@@ -35,12 +35,6 @@ You, as the Pacman will try to eat all the food and to not collide with four gho
 >#### Using Firebase
 >
 >- **Database** to store scores board data
->
->- **Function** to calculate the top scores and send refreshing command to Messaging.
->
->- **Messaging** to send request to client app for updating the current user Scores Board.
-
-[![An old rock in the desert](/public/notify.png "Firebase components")](https://firebase.google.com/docs/functions/images/notify.png?authuser=0)
 
 ## Technical issues
 
