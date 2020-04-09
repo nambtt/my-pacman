@@ -1,27 +1,39 @@
 
-.header {
-  height: 40px;
-  display: flex;
+ .header {
 }
+/*
 .head {
   width: 90%;
+} */
+.author .label {
+  margin-left: 0 !important;
 }
-.author {
-  font-size: 10px;
+.author a {
+  color: rgba(0,0,0,.6) !important;
+}
+#leftPanel {
+  padding: 2em;
+  padding-right: 1em !important;
+}
+#btnHelp {
+  position: absolute;
+  top: 1.2em;
+  right: 0;
+}
+#btnHelp:hover #howTo {
+  display: block;
 }
 #howTo {
+  display: none;
   position: absolute;
-  width: 400px;
+  width: 250px;
+  padding: 2em;
   right: 0;
-  background-color: white;
+  top: 1.2em;
+  background-color: #eee;
   overflow: visible;
-  z-index: 1;
-}
-.lets-play {
-  font-size: 16px;
-  width: 120px;
-  line-height: 30px;
-  margin-bottom: 20px;
+  z-index: 2;
+  border-radius: 3px;
 }
 .controller {
   position: absolute;
@@ -57,10 +69,8 @@
 }
 .scene {
   height: calc(100vh);
-  width: calc(100vw);
   background-color: black;
   position: relative;
-  border: 10px rgb(30, 42, 164) solid;
   overflow: hidden;
 }
 .food {
@@ -194,6 +204,30 @@
 }
 
 #winLoseModal {
-  width: 700px;
+  width: 350px;
   /* height: 500px; */
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+  /* The above is shorthand for:
+  flex-grow: 0,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+  padding: 1em 0;
+}
+
+.box .row.footer {
+  flex: 0 1 40px;
 }

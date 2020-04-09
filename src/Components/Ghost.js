@@ -35,7 +35,7 @@ class Ghost extends React.Component {
 		var currentLeft = this.state.position.left;
 		var currentTop = this.state.position.top;
         if (this.state.direction === 'right') {
-            var distanceToRightBorder = window.innerWidth - 2*this.props.border - currentLeft - this.props.ghostSize;
+            var distanceToRightBorder = this.props.sceneWidth - currentLeft - this.props.ghostSize;
             var step = Math.min(this.props.velocity, distanceToRightBorder);
             this.setStateWhilePlaying({position: {left: currentLeft + step, top: currentTop}});
         }
@@ -45,7 +45,7 @@ class Ghost extends React.Component {
             this.setStateWhilePlaying({position: {left: currentLeft - step, top: currentTop}});
         }
         if (this.state.direction === 'down') {
-            var distanceToBottomBorder = window.innerHeight - this.props.topBarHeight - 2*this.props.border - currentTop - this.props.ghostSize;
+            var distanceToBottomBorder = this.props.sceneHeight - currentTop - this.props.ghostSize;
             step = Math.min(this.props.velocity, distanceToBottomBorder);
             this.setStateWhilePlaying({position: {top: currentTop + step, left: currentLeft}});
         }
@@ -82,8 +82,6 @@ class Ghost extends React.Component {
 }
 
 Ghost.defaultProps = {
-    border: 10,
-    topBarHeight: 40,
     ghostSize: 60,
     velocity: 20,
     direction: 'left'

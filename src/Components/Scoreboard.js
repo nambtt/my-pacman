@@ -51,7 +51,7 @@ class Scoreboard extends React.Component {
         // set ranks
         var tops = players.slice(0, 3).map((item, i) => { return Object.assign({}, item, {rank: i + 1})});
         var isCurrentPlayerInTops = tops.filter(top => { return top.key === this.props.playerKey}).length;
-        if (!isCurrentPlayerInTops) {
+        if (this.props.playerKey && !isCurrentPlayerInTops) {
 
             // add current player
             let curRank = -1;
@@ -96,7 +96,7 @@ class Scoreboard extends React.Component {
     render() {
         return (
             <div className="score-board">
-                <table className="ui table striped">
+                <table className="ui small table striped">
                     <thead>
                         <tr>
                         <th>Rank</th>

@@ -9,9 +9,12 @@ class Scene extends React.Component {
     constructor(props) {
         super(props);
         this.pacmanRef = React.createRef();
+        this.scene = React.createRef();
         this.ghostRefs = [];
         this.foodRefs = [];
-        var maxLine = Math.max(window.innerHeight, window.innerWidth);
+        var maxLine = Math.max(window.innerHeight, this.getSceneWidth());
+        console.log(window.innerHeight);
+        console.log(this.getSceneWidth());
         this.noOfGhosts = Math.floor(maxLine/250);
         for (var i=0; i<this.noOfGhosts; i++) {
             this.ghostRefs.push(React.createRef());
@@ -99,11 +102,15 @@ class Scene extends React.Component {
           return false;
     }
 
+    getSceneWidth() {
+        return window.innerWidth * 0.6875;
+    }
+
     render() {
         var foods = [];
-        
-        this.noOfFoodColumns = Math.round((window.innerWidth - 2*this.props.border)/this.props.foodSize);
-        this.noOfFoodRows = Math.round((window.innerHeight - this.props.topBarHeight - 2*this.props.border)/this.props.foodSize);
+        this.noOfFoodColumns = Math.round(this.getSceneWidth()/this.props.foodSize);
+        this.noOfFoodRows = Math.round(window.innerHeight/this.props.foodSize);
+
         for (var i = 0; i < this.noOfFoodRows; i++) {
             if (this.foodRefs.length < this.noOfFoodRows)
                 this.foodRefs.push([]);
@@ -119,28 +126,32 @@ class Scene extends React.Component {
             ghosts.push(<Ghost 
                 ref={this.ghostRefs[i]} 
                 key={i}
+                sceneWidth={this.getSceneWidth()}
+                sceneHeight={window.innerHeight}
                 playing={this.props.playing} 
-                position={{top: (i + 1) * window.innerHeight/(this.noOfGhosts + 1), left: (i + 1) * window.innerWidth/(this.noOfGhosts + 1)}} 
+                position={{top: (i + 1) * window.innerHeight/(this.noOfGhosts + 1), left: (i + 1) * this.getSceneWidth()/(this.noOfGhosts + 1)}} 
                 color={this.ghostColors[i]}
                 direction={this.directions[Math.floor(Math.random() * 4)]}></Ghost>);
         }
         return (
-            <div className="scene">
-                {foods}
-                <Pacman ref={this.pacmanRef} 
-                    playing={this.props.playing} 
-                    position={{top: 0, left: 0}}
-                    direction={this.props.direction}
-                    randomDirection={this.props.randomDirection}></Pacman>
-                {ghosts}
+            <div className="column eleven wide" style={{paddingLeft: 0, paddingBottom: 0}}>
+                <div className="scene" ref={this.scene}>
+                    {foods}
+                    <Pacman ref={this.pacmanRef} 
+                        sceneWidth={this.getSceneWidth()}
+                        sceneHeight={window.innerHeight}
+                        playing={this.props.playing} 
+                        position={{top: 0, left: 0}}
+                        direction={this.props.direction}
+                        randomDirection={this.props.randomDirection}></Pacman>
+                    {ghosts}
+                </div>
             </div>
         )
     }
 }
 
 Scene.defaultProps = {
-    border: 10,
-    topBarHeight: 40,
     foodSize: 60,
     foodCollidingSize: 10
 }

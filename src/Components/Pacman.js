@@ -21,7 +21,7 @@ class Pacman extends React.Component {
 		var currentLeft = this.state.position.left;
 		var currentTop = this.state.position.top;
         if (this.props.direction === 'right') {
-            var distanceToRightBorder = window.innerWidth - 2*this.props.border - currentLeft - this.props.pacmanSize;
+            var distanceToRightBorder = this.props.sceneWidth - currentLeft - this.props.pacmanSize;
             var step = Math.min(this.props.velocity, distanceToRightBorder);
             this.setStateWhilePlaying({position: {left: currentLeft + step, top: currentTop}});
         }
@@ -31,7 +31,7 @@ class Pacman extends React.Component {
             this.setStateWhilePlaying({position: {left: currentLeft - step, top: currentTop}});
         }
         if (this.props.direction === 'down') {
-            var distanceToBottomBorder = window.innerHeight - this.props.topBarHeight - 2*this.props.border - currentTop - this.props.pacmanSize;
+            var distanceToBottomBorder = this.props.sceneHeight - currentTop - this.props.pacmanSize;
             step = Math.min(this.props.velocity, distanceToBottomBorder);
             this.setStateWhilePlaying({position: {top: currentTop + step, left: currentLeft}});
         }
@@ -68,8 +68,8 @@ class Pacman extends React.Component {
 }
 
 Pacman.defaultProps = {
-    border: 10,
-    topBarHeight: 40,
+    sceneWidth: 400,
+    sceneHeight: 400,
     pacmanSize: 60,
     velocity: 20,
     direction: 'right'

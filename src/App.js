@@ -24,7 +24,7 @@ class App extends React.Component {
     this.controllerRef = React.createRef();
     this.baseState = {
       gameKey: Math.random()*1000000,
-      showingRegister: false,
+      showingRegister: true,
       showingHelp: false,
       showingScore: false,
       direction: 'right', 
@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.playAgain(this.state.gameKey);
+    //this.playAgain(this.state.gameKey);
   }
 
   increaseValue() {
@@ -50,8 +50,7 @@ class App extends React.Component {
 
       this.setState({finished: true, lost: true});
 
-      Firebase.database().ref('players/' + this.state.playerKey).set({
-        name: this.state.playerName,
+      Firebase.database().ref('players/' + this.state.playerKey).update({
         score: this.state.points,
         won: false,
         date: new Date().toLocaleString()
@@ -71,13 +70,13 @@ class App extends React.Component {
     this.setState({direction: direction});
   }
 
-  playAgain(playerName) {
+  playAgain(player) {
     if (!this.state.playerKey) {
-      const playerKey = Firebase.database().ref('/players').push({name: playerName}).key;
+      const playerKey = Firebase.database().ref('/players').push({name: player.playerName, secret: player.secret}).key;
       this.setState(this.baseState);
       this.setState({gameKey: Math.random()*1000000});
       this.setState({playerKey: playerKey});
-      this.setState({playerName: playerName});
+      this.setState({playerName: player.playerName});
       this.setState({showingRegister: false});
     } else {
       this.setState(this.baseState);
@@ -93,31 +92,32 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App pacman-app" key={this.state.gameKey}>
+
+      <div className="ui two column stackable grid pacman-app" key={this.state.gameKey}>
         <RegisterPlayer startGame={this.playAgain.bind(this)} display={this.state.showingRegister}/>
-        <Header ref={this.headerRef}
-          points={this.state.points}
-          playing={!this.state.showingHelp} 
-          showHideHelp={this.showHideHelp.bind(this)}>
-        </Header>
-        <Scene ref={this.sceneRef} 
-          playing={!this.state.showingHelp && !this.state.showingRegister}
-          direction={this.state.direction}
-          points={this.state.points}
-          gameOver={this.gameOver.bind(this)} 
-          win={this.win.bind(this)} 
-          increase={this.increaseValue.bind(this)} 
-          randomDirection={this.randomDirection.bind(this)}></Scene>
+          <Header ref={this.headerRef}
+            points={this.state.points}
+            playing={!this.state.showingHelp} 
+            showHideHelp={this.showHideHelp.bind(this)}>
+            <Scoreboard 
+              playerKey={this.state.playerKey} 
+              playerName={this.state.playerName} />
+          </Header>
+          <Scene ref={this.sceneRef} 
+            playing={!this.state.showingRegister && !this.state.finished}
+            direction={this.state.direction}
+            points={this.state.points}
+            gameOver={this.gameOver.bind(this)} 
+            win={this.win.bind(this)} 
+            increase={this.increaseValue.bind(this)} 
+            randomDirection={this.randomDirection.bind(this)}></Scene>
         <Controller ref={this.controllerRef} 
           changeDirection={this.changeDirection.bind(this)}/>
         <WinLose 
+          score={this.state.points}
           lost={this.state.lost} 
-          finished={true} 
+          finished={this.state.finished} 
           playAgain={this.playAgain.bind(this)}>
-            <Scoreboard 
-            playerKey={this.state.playerKey} 
-            playerName={this.state.playerName} />
-
           </WinLose>
       </div>
     );
