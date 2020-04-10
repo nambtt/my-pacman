@@ -28,7 +28,7 @@ class RegisterPlayer extends React.Component {
                             <div className="ui input"><input type="text" placeholder="You name..." value={this.state.playerName} onChange={e => this.setState({playerName: e.target.value})}/></div>
                         </div>
                         <div className="field">
-                            <div className="ui input"><input type="text" placeholder="You name..." value={this.state.secret} onChange={e => this.setState({secret: e.target.value})}/></div>
+                            <div className="ui input"><input type="text" placeholder="Random secret..." value={this.state.secret} onChange={e => this.setState({secret: e.target.value})}/></div>
                         </div>
                         <button className="ui button primary save-btn" onClick={this.savePlayerName}>Play</button>
                         
