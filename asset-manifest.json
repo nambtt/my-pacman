@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/my-pacman/static/css/main.217da32e.chunk.css",
-    "main.js": "/my-pacman/static/js/main.1919e2f8.chunk.js",
-    "main.js.map": "/my-pacman/static/js/main.1919e2f8.chunk.js.map",
+    "main.js": "/my-pacman/static/js/main.0168d0e6.chunk.js",
+    "main.js.map": "/my-pacman/static/js/main.0168d0e6.chunk.js.map",
     "runtime-main.js": "/my-pacman/static/js/runtime-main.edf9a7b0.js",
     "runtime-main.js.map": "/my-pacman/static/js/runtime-main.edf9a7b0.js.map",
     "static/js/2.06b01d49.chunk.js": "/my-pacman/static/js/2.06b01d49.chunk.js",
     "static/js/2.06b01d49.chunk.js.map": "/my-pacman/static/js/2.06b01d49.chunk.js.map",
     "index.html": "/my-pacman/index.html",
-    "precache-manifest.ad296b97d5c428549008cdaff9d7e5f2.js": "/my-pacman/precache-manifest.ad296b97d5c428549008cdaff9d7e5f2.js",
+    "precache-manifest.c138271829bd9c1528f058c71e3e3bcb.js": "/my-pacman/precache-manifest.c138271829bd9c1528f058c71e3e3bcb.js",
     "service-worker.js": "/my-pacman/service-worker.js",
     "static/css/main.217da32e.chunk.css.map": "/my-pacman/static/css/main.217da32e.chunk.css.map",
     "static/js/2.06b01d49.chunk.js.LICENSE.txt": "/my-pacman/static/js/2.06b01d49.chunk.js.LICENSE.txt",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.edf9a7b0.js",
     "static/js/2.06b01d49.chunk.js",
     "static/css/main.217da32e.chunk.css",
-    "static/js/main.1919e2f8.chunk.js"
+    "static/js/main.0168d0e6.chunk.js"
   ]
 }
