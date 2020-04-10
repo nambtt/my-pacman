@@ -1,4 +1,6 @@
 import React from 'react';
+import Confs from './Configurations';
+const ReactMarkdown = require('react-markdown');
 
 class RegisterPlayer extends React.Component {
 
@@ -7,6 +9,7 @@ class RegisterPlayer extends React.Component {
         this.state = { 
             playerName: '',
             secret: '',
+            tvChecked: false
         };
     }
 
@@ -16,12 +19,23 @@ class RegisterPlayer extends React.Component {
             this.props.startGame({playerName: this.state.playerName, secret: this.state.secret});
         }
     }
+
+    handleTVCheckboxChange = event =>
+        this.setState({ tvChecked: event.target.checked })
     
     render() {
         return (
             <>
                 <div id="registerModal" className={"modal-content " + (this.props.display ? "": " hide ")}>
-                    <h2 className="ui header">Register Your Name</h2>
+                    <div className="ui toggle checkbox language">
+                        <input type="checkbox" name="language" 
+                            checked={this.state.tvChecked}
+                            onChange={this.handleTVCheckboxChange} 
+                        />
+                        <label>Tiếng Việt</label>
+                    </div>
+                    <ReactMarkdown source={this.state.tvChecked ? Confs.howToViet : Confs.howTo} />
+                    <h2 className="ui header">Register</h2>
                     <form onSubmit={this.onFormSubmit} className={"ui form "}>
                         
                         <div className="field">

@@ -193,13 +193,18 @@
   color: orange;
   font-weight: bold;
 }
-
+.language {
+    /* position: absolute !important;
+    top: 0;
+    right: 0;
+    padding: 1.5em; */
+}
 #registerModal {
-  width: 400px;
+  width: 600px;
 }
 
-#registerModal input[type=text] {
-  width: 250px;
+#registerModal .ui.input {
+  width: 280px;
   max-width: 40vw;
 }
 

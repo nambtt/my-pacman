@@ -1,4 +1,5 @@
 import React from 'react';
+import Confs from './Configurations';
 const ReactMarkdown = require('react-markdown');
 
 const input =
@@ -72,7 +73,7 @@ class Header extends React.Component {
                                 <i class="question circle icon"></i>
                             </a>
                             <div id="howTo">
-                                <ReactMarkdown source={input} />
+                                <ReactMarkdown source={Confs.howTo} />
                             </div>
                         </div>
                     </div>
