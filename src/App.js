@@ -32,7 +32,7 @@ class App extends React.Component {
       lost: false, 
       points: 0
     };
-    this.fullBaseState = Object.assign({}, this.baseState, {playerKey: '', playerName: ''});
+    this.fullBaseState = Object.assign({}, this.baseState, {playerKey: '', playerName: '', noOfRetry: 0});
     this.state = this.fullBaseState;
   }
 
@@ -53,13 +53,20 @@ class App extends React.Component {
       Firebase.database().ref('players/' + this.state.playerKey).update({
         score: this.state.points,
         won: false,
-        date: new Date().toLocaleString()
+		date: new Date().toLocaleString(),
+		noOfRetry: this.state.noOfRetry
       });
     }
   }
 
   win() {
-    this.setState({finished: true, lost: false});
+	this.setState({finished: true, lost: false});
+	Firebase.database().ref('players/' + this.state.playerKey).update({
+        score: this.state.points,
+        won: true,
+		date: new Date().toLocaleString(),
+		noOfRetry: this.state.noOfRetry
+      });
   }
 
   showHideHelp(hide) {
@@ -79,9 +86,12 @@ class App extends React.Component {
       this.setState({playerName: player.playerName});
       this.setState({showingRegister: false});
     } else {
+		
       this.setState(this.baseState);
       this.setState({gameKey: Math.random()*1000000});
       this.setState({showingRegister: false});
+	  var noOfRetry = this.state.noOfRetry + 1;
+	  this.setState({noOfRetry: noOfRetry});
     }
     
   }

@@ -49,7 +49,7 @@ class Scoreboard extends React.Component {
         // sort by score
         players.sort(this.compare);
         // set ranks
-        var tops = players.slice(0, 3).map((item, i) => { return Object.assign({}, item, {rank: i + 1})});
+        var tops = players.slice(0, 5).map((item, i) => { return Object.assign({}, item, {rank: i + 1})});
         var isCurrentPlayerInTops = tops.filter(top => { return top.key === this.props.playerKey}).length;
         if (this.props.playerKey && !isCurrentPlayerInTops) {
 
@@ -64,7 +64,7 @@ class Scoreboard extends React.Component {
                 })[0];
 
             // add sencond top players
-            if (curRank > 4) {
+            if (curRank > 6) {
                 tops.push({key:'dummy1', name: '...', rank: ''});
             }
 
@@ -78,9 +78,9 @@ class Scoreboard extends React.Component {
                 tops.push(Object.assign({}, players[players.length - 1], {rank: players.length}));
             }
         } else {
-            if (players.length == 4) {
+            if (players.length == 6) {
                 tops.push(Object.assign({}, players[players.length - 1], {rank: players.length}));
-            } else if (players.length > 4) {
+            } else if (players.length > 6) {
                 tops.push({key:'dummy1', name: '...', rank: ''});
                 tops.push(Object.assign({}, players[players.length - 1], {rank: players.length}));
             }

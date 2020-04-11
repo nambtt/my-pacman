@@ -15,7 +15,7 @@ class Scene extends React.Component {
         var maxLine = Math.max(window.innerHeight, this.getSceneWidth());
         console.log(window.innerHeight);
         console.log(this.getSceneWidth());
-        this.noOfGhosts = Math.floor(maxLine/250);
+        this.noOfGhosts = Math.floor(maxLine/140);
         for (var i=0; i<this.noOfGhosts; i++) {
             this.ghostRefs.push(React.createRef());
         }
@@ -141,7 +141,7 @@ class Scene extends React.Component {
                         sceneWidth={this.getSceneWidth()}
                         sceneHeight={window.innerHeight}
                         playing={this.props.playing} 
-                        position={{top: 0, left: 0}}
+                        position={{top: 500, left: 0}}
                         direction={this.props.direction}
                         randomDirection={this.props.randomDirection}></Pacman>
                     {ghosts}
