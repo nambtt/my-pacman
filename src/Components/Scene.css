@@ -194,10 +194,10 @@
   font-weight: bold;
 }
 .language {
-    /* position: absolute !important;
-    top: 0;
-    right: 0;
-    padding: 1.5em; */
+  position: absolute !important;
+  right: 0;
+  top: 0;
+  margin: 1.5em;
 }
 #registerModal {
   width: 700px;
